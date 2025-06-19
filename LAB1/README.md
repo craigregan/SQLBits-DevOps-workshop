@@ -13,7 +13,7 @@ permalink: /LAB1/
 
 ## Workshop prerequisites
 
-If your instructors have provided you with a connection string to the Wingtips database, you are ready to start the workshop. If you are doing this workshop as part of a self-paced learning experience, you will need to deploy the initial state of the Wingtips database yourself. The instructions for deploying the initial state of the Wingtips database are provided in [**LAB0**](../LAB0/README.md).
+If your instructors have provided you with a connection string to the Wingtips database, you are ready to start the workshop. If you are doing this workshop as part of a self-paced learning experience, you will need to deploy the initial state of the Wingtips database yourself. The instructions for deploying the initial state of the Wingtips database are provided in [**LAB0**](../LAB0).
 
 You must have the following installed on your machine:
 
