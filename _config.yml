@@ -1,4 +1,4 @@
-title: SQL DevOps workshop
+title: SQLBits DevOps workshop
 description: SQL projects and source control integration for SQL in Fabric, Azure SQL, and SQL Server
 
 # jeklyl base settings
@@ -8,7 +8,7 @@ baseurl: ""
 
 # theme settings
 perma_link: "https://aka.ms/sql-devops-workshop"
-github_repo: "dzsquared/sql-devops-workshop"
+github_repo: "HeyMo0sh/SQLBits-DevOps-workshop"
 
 header_pages:
   - LAB1/README.md
