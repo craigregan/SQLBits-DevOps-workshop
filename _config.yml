@@ -7,7 +7,7 @@ url: ""
 baseurl: ""
 
 # theme settings
-perma_link: "https://aka.ms/sql-devops-workshop"
+perma_link: "https://sqlworkshop.makestuffgo.com/"
 github_repo: "HeyMo0sh/SQLBits-DevOps-workshop"
 
 header_pages:
