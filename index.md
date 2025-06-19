@@ -62,8 +62,15 @@ If you have feedback about the workshop, open an issue to share your thoughts, s
 
 [Hamish Watson](https://www.linkedin.com/in/hamishwatson8/) is a Microsoft Data Platform MVP with a passion for efficient database & application deployments using DevOps methodologies.
 
-He has formed his own company – Morph iT – based in Christchurch, New Zealand and provides consultancy services for many clients in the US, Canada, UK, Australia and NZ
-He has 20 years IT experience in managing and deploying large scale databases on SQL Server technologies. He has been managing SQL Server since SQL Server 2000 and pragmatic approaches to delivering business value to end users is his career passion.
+He has formed his own company – Morph iT Limited – based in Christchurch, New Zealand and provides consultancy services for many clients in the US, Canada, UK, Australia and NZ.
+
+He also has created a small startup called [MakeStuffGo](https://www.makestuffgo.com) this company is dedicated to bringing AI services to both Cloud and DevOps Engineering practices.  
+
+Wnat to see how your company stacks up against DevOps, FinOps and Cloud standards?
+
+Take the [FREE assessment guide](https://assessment.makestuffgo.com)
+
+He has 25+ years IT experience in managing and deploying large scale applications using various technologies. He has been managing SQL Server since SQL Server 2000 and pragmatic approaches to delivering business value is his career passion.
 
 Educating and helping others learn is a driver for Hamish and he is a User Group Leader, International speaker and a repeat guest lecturer at universities.
 
