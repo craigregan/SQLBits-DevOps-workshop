@@ -46,7 +46,7 @@ This workshop is a deep dive on database DevOps centered on the SQL database pro
 
 ## Workshop contents
 
-This site provides a walk-through of the workshop labs with checkpoints that can be expanded to check your work. The contents of this site are available at [https://github.com/dzsquared/sql-devops-workshop](https://github.com/dzsquared/sql-devops-workshop), including the full expected results of each lab. This project is licensed under the MIT License such that it can be used in whole or part to help others improve their database DevOps implementations - see the [LICENSE](LICENSE.md) file for details.
+This site provides a walk-through of the workshop labs with checkpoints that can be expanded to check your work. The contents of this site are available at [https://github.com/HeyMo0sh/SQLBits-DevOps-workshop](https://github.com/HeyMo0sh/SQLBits-DevOps-workshop), including the full expected results of each lab. This project is licensed under the MIT License such that it can be used in whole or part to help others improve their database DevOps implementations - see the [LICENSE](LICENSE.md) file for details.
 
 If you have feedback about the workshop, open an issue to share your thoughts, suggestions, or any issues you encounter. Pull requests are also welcome if you want to contribute to workshop content. Check out the [CONTRIBUTING](/contributing/) page for more information on how to contribute.
 
@@ -66,9 +66,9 @@ He has formed his own company – Morph iT Limited – based in Christchurch, Ne
 
 He also has created a small startup called [MakeStuffGo](https://www.makestuffgo.com) this company is dedicated to bringing AI services to both Cloud and DevOps Engineering practices.  
 
-Wnat to see how your company stacks up against DevOps, FinOps and Cloud standards?
+Want to see how your company stacks up against DevOps, FinOps and Cloud industry standards?
 
-Take the [FREE assessment guide](https://assessment.makestuffgo.com)
+Take the [FREE DevOps & Finops Assessment Guide](https://assessment.makestuffgo.com)
 
 He has 25+ years IT experience in managing and deploying large scale applications using various technologies. He has been managing SQL Server since SQL Server 2000 and pragmatic approaches to delivering business value is his career passion.
 
