@@ -1,0 +1,57 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Deploy SQL project
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore Wingtips/Wingtips.sqlproj
+    - name: Build
+      run: dotnet build Wingtips/Wingtips.sqlproj --no-restore
+    - name: Get deploy script
+      run: |
+        sqlpackage /Action:Script /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:"${{ secrets.SQL_CONNECTION_STRING }}" /OutputPath:WingtipsDeploy.sql /p:IgnoreColumnOrder=true
+    - name: Upload SQL script
+      uses: actions/upload-artifact@v3
+      with:
+        name: WingtipsDeploy.sql
+    - name: Generate deploy report
+      run: |
+        sqlpackage /Action:DeployReport /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:"${{ secrets.SQL_CONNECTION_STRING }}" /OutputPath:WingtipsDeployReport.xml /p:IgnoreColumnOrder=true
+    - name: Prettify deploy report
+      shell: pwsh
+      run: .github/workflows/deployReportOutput.ps1 -deployReportFile WingtipsDeployReport.xml
+    - name: output step summary
+      run: |
+        cat deployreport.md >> $GITHUB_STEP_SUMMARY
+
+  deploy:
+    runs-on: ubuntu-22.04
+    environment: ProductionDeployment
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore Wingtips/Wingtips.sqlproj
+    - name: Build
+      run: dotnet build Wingtips/Wingtips.sqlproj --no-restore
+    - name: Publish SQL project
+      run: |
+        sqlpackage /Action:Publish /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:${{ secrets.SQL_CONNECTION_STRING }} /p:IgnoreColumnOrder=true

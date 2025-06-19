@@ -1,0 +1,54 @@
+name: Test SQL project with SQL Server 2022
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'Wingtips/**'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'Wingtips/**'
+    
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    # service/sidecar container for sql
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: 1
+          SA_PASSWORD: ${{ secrets.CONTAINER_SQL_PASSWORD }}
+        ports:
+          - 1433:1433
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Build
+        run: dotnet build Wingtips/Wingtips.sqlproj
+      - name: 'wait for sql container to be ready'
+        run: |
+          set +o pipefail +e
+          for i in {1..60};
+          do
+              sqlcmd -S localhost -U sa -P ${{ secrets.CONTAINER_SQL_PASSWORD }} -d master -Q "select getdate()"
+              if [ $? -eq 0 ]
+              then
+                  echo "sql server ready"
+                  break
+              else
+                  echo "not ready yet..."
+                  sleep 1
+              fi
+          done
+          set -o pipefail -e
+
+      - name: Publish SQL project
+        run: |
+          sqlpackage /Action:Publish /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:"Data Source=localhost,1433;Database=Wingtips;User ID=sa;Password=${{ secrets.CONTAINER_SQL_PASSWORD }};TrustServerCertificate=True;" /p:AllowIncompatiblePlatform=true

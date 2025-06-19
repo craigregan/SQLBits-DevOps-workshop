@@ -1,0 +1,71 @@
+
+name: Deploy SQL project
+
+on:
+  workflow_dispatch:
+    inputs:
+      DBVersion:
+        required: true
+        type: string
+        description: 'Version of the database to deploy, eg 1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore Wingtips/Wingtips.sqlproj
+    - name: Build
+      run: dotnet build Wingtips/Wingtips.sqlproj --no-restore
+    - name: Get deployment script
+      run: |
+        sqlpackage /Action:Script /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:"${{ secrets.SQL_CONNECTION_STRING }}" /OutputPath:WingtipsDeploy.sql /v:DBVersion=${{ github.event.inputs.DBVersion }}
+    - name: Upload SQL script
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReviewDeploymentScript
+        path: WingtipsDeploy.sql
+    - name: Generate deploy report
+      run: |
+        sqlpackage /Action:DeployReport /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:"${{ secrets.SQL_CONNECTION_STRING }}" /OutputPath:WingtipsDeployReport.xml /v:DBVersion=${{ github.event.inputs.DBVersion }}
+    - name: Prettify deploy report
+      shell: pwsh
+      run: .github/workflows/deployReportOutput.ps1 -deployReportFile WingtipsDeployReport.xml
+    - name: output step summary
+      run: |
+        cat deployreport.md >> $GITHUB_STEP_SUMMARY
+
+  deploy:
+    runs-on: ubuntu-22.04
+    environment: ProductionDeployment
+    needs: build
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore Wingtips/Wingtips.sqlproj
+    - name: Build
+      run: dotnet build Wingtips/Wingtips.sqlproj --no-restore
+    - name: Publish SQL project
+      run: |
+        sqlpackage /Action:Publish /SourceFile:Wingtips/bin/Debug/Wingtips.dacpac /TargetConnectionString:"${{ secrets.SQL_CONNECTION_STRING }}" /v:DBVersion=${{ github.event.inputs.DBVersion }}
+    - name: Archive release assets
+      uses: softprops/action-gh-release@v2
+      with:
+        files: Wingtips/bin/Debug/Wingtips.dacpac
+        tag_name: "v${{ github.event.inputs.DBVersion }}"
+        name: "Wingtips v${{ github.event.inputs.DBVersion }}"
+        make_latest: true
