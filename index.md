@@ -15,7 +15,7 @@ This workshop is a deep dive on database DevOps centered on the SQL database pro
 
 Server:      sqlbits.database.windows.net
 Admin:       sqladmin
-Password:    2025SQLb!ts4U
+Password:    2025SQLbits4U
 
 ## Workshop labs
 
