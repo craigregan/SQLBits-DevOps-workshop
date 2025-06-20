@@ -13,9 +13,65 @@ This workshop is a deep dive on database DevOps centered on the SQL database pro
 
 ## SQL Server Details
 
-Server:      sqlbits.database.windows.net
-Admin:       sqladmin
-Password:    2025SQLbits4U
+- Server:      sqlbits.database.windows.net
+- Admin:       sqladmin
+- Password:    2025SQLbits4U
+
+## CodeSpace Install of SQLPACKAGE & .NET SDK
+
+### .NET SDK
+
+1. To install the .NET 8 SDK in a Codespace, follow these steps:
+
+1. Open the terminal in your Codespace.
+1. Download and install the .NET 8 SDK using the official Microsoft installation script:
+
+``` bash
+wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+chmod +x dotnet-install.sh
+./dotnet-install.sh --channel 8.0
+```
+
+1. Add the installed .NET tools to your PATH:
+
+``` bash
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:$HOME/.dotnet
+```
+
+1. Verify the installation:
+
+``` bash
+dotnet --version
+```
+
+### SQLPACKAGE
+
+1. To install sqlpackage in your Codespace (Linux), follow these steps in the terminal:
+
+``` bash
+wget https://aka.ms/sqlpackage-linux -O sqlpackage.zip
+```
+
+1. Extract the zip file:
+
+```bash
+unzip sqlpackage.zip -d sqlpackage
+```
+
+1. Move sqlpackage to a directory in your PATH (e.g., /usr/local/bin):
+
+```bash
+sudo mv sqlpackage /opt/sqlpackage
+sudo chmod +x /opt/sqlpackage/sqlpackage
+sudo ln -s /opt/sqlpackage/sqlpackage /usr/local/bin/sqlpackage
+```
+
+1. Verify the installation:
+
+``` bash
+sqlpackage -?
+````
 
 ## Workshop labs
 
